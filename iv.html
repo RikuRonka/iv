@@ -1,0 +1,958 @@
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+html{
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+	body{
+		background-color:#282923;
+		  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+	}
+	#lucky{
+		background-image: url();
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 100%;
+		transition: 0s;
+		position: absolute;
+		opacity: 0;
+	}
+	.bar
+	{
+		background-color:#EF9338;
+		border-radius: 25px;
+	
+	}
+	#attack
+	{
+		margin-top:10px;
+	}
+	#defence
+	{
+		margin-top:20px;
+	}
+	#hp
+	{
+		margin-top:20px;
+	}
+	span{
+		color:white;
+		position: absolute;
+		
+	}
+	#firstmarker{
+		background-color: black;
+		width:5px;
+		height:147px;
+		position: absolute;
+		margin-left: 250px;
+	}
+	#secondmarker{
+		background-color: black;
+		width:5px;
+		height:142px;
+		position: absolute;
+		margin-left: 500px;
+	}
+	#thirdmarker{
+		background-color: black;
+		width:5px;
+		height:142px;
+		position: absolute;
+		margin-left: 750px;
+	}
+	#reset{
+		position: absolute;
+		left:800px;
+		top:700px;
+		font-size: 3em;
+		visibility: hidden;
+	}
+	#reset2{
+		position: absolute;
+		left:800px;
+		top:700px;
+		font-size: 3em;
+	}
+	p{
+		color:white;
+		float: left;
+		display: inline;
+	}
+	input{
+		display: inline;
+		float: left;
+	}
+	img{
+		width:100px;
+		user-drag: none; 
+user-select: none;
+-moz-user-select: none;
+-webkit-user-drag: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+	}
+	div
+	{
+		
+	}
+	tbody td{
+		width:60px;
+		text-align:center;
+		
+	}
+	#table tr td:first-child{
+		font-weight:bold;
+	}
+</style>
+<body>
+<h1 id="sorry" style="position: absolute;margin:auto;top:50%;left:27%;color:red;display: none;">Sorry, this site is only available on 1920 x 1080 resolution</h1>
+<video id="video" autoplay muted loop style="position: absolute;width: 1920px;height: 1080px;display: none;">
+  <source src="lucky_loop.mp4" type="video/mp4">
+</video>
+<div class="container">
+	<div style="top:300px;position: absolute;left:600px;">
+	
+		<div id="firstmarker"></div>
+		<div id="secondmarker"></div>
+		<div id="thirdmarker"></div>
+		<div id="attack" class="bar" style="height:30px;"><p id="attackiv" style="position: absolute;margin-left:15px;visibility: hidden;"></p><span style="position: absolute;left:-75px;">Attack</span></div>
+		<div id="defence" class="bar" style="height:30px;"><p id="defiv" style="position: absolute;margin-left:15px;visibility: hidden;"></p><span style="position: absolute;left:-75px;">Defence</span></div>
+		<div id="hp" class="bar"><p id="hpiv" style="position: absolute;margin-left:15px;visibility: hidden;"></p><span style="position: absolute;left:-75px;">HP</span></div>
+	</div>
+</div>	
+<button id="reset" class="btn btn-success" style="background-color:lime; ">Reroll IV's</button><input id="rerolltimes" value="1" type="number" min="1" max="150" style="font-size:2em;position: absolute;left:1060px;top:715px;"/><span style="font-size: 2.5em;position: absolute;left:1200px;top:715px;color:white">times</span>
+<button id="reset2" class="btn btn-success">Reroll IV's</button>
+<br>
+<table class="table" style="max-width:200px;transform: scale(1.5);margin-left: 160px;margin-top:-10px;">
+	<tr>
+		<td><input name="sm" type="radio" id="goodfriend" checked /><p>Good friend</p><img src="goodfriend.png"/></td>
+		<td><input name="sm" type="radio" id="greatfriend"/><p>Great friend</p><img src="greatfriend.png"/></td>
+		<td><input name="sm" type="radio" id="ultrafriend"/><p>Ultra friend</p><img src="ultrafriend.png"/></td>
+		<td><input name="sm" type="radio" id="bestfriend"/><p>Best friend</p><img src="bestfriend.png"/></td>
+	</tr>	
+
+</table>
+<h5 id="minivs" style="color:white;float:left;position:absolute; left:-50px"></h5>
+
+<h5 id="ivpercent" style="position: absolute;left:850px;top:500px;color:white;font-size:4em;font-weight: bold;"></h5>
+
+<img src="star.png" style="position: absolute;left:800px;top:180px;display: none;" id="star1"/>
+<img src="star.png" style="position: absolute;left:900px;top:180px;display: none;" id="star2"/>
+<img src="star.png" style="position: absolute;left:1000px;top:180px;display: none;" id="star3"/>
+</body>
+
+<audio id="audio">
+	<source src="Level_99_Fireworks.ogg" type="audio/ogg">
+</audio>
+
+<audio id="luckysound0">
+	<source src="Hitpoints.ogg" type="audio/ogg">
+</audio>
+
+<audio id="luckysound1">
+	<source src="Strength.ogg" type="audio/ogg">
+</audio>
+
+<audio id="luckysound2">
+	<source src="lucky_sound.ogg" type="audio/ogg">
+</audio>
+
+
+<div style="position: absolute;right:400px;top:20px;">
+	<button class="btn btn-primary" id="uncheckall">Uncheck all</button>
+	<p style="margin-top:80px;margin-left: -130px;position: absolute;">Show only lucky's</p><input id="showluckies" type="radio" name="nappi" style="position: absolute;margin-top:87px;"/>
+	<p style="margin-top:110px;margin-left: -150px;position: absolute;">Show only 100% IV's</p><input id="showsatku" type="radio" name="nappi" style="position: absolute;margin-top:117px;"/>
+	<p style="margin-top:150px;margin-left: -280px;position: absolute;">Show only WHERE <select id="iv_type"><option>ATT</option><option>DEF</option><option>HP</option></select> IV is &nbsp;<input value="1" min="1" max="15" type="number" id="user_iv_value" style="width:50px;display:block;float:right;"/></p><input id="showcustom" type="radio" name="nappi" style="position: absolute;margin-top:157px;"/>
+	<p style="margin-top:200px;margin-left: -325px;position: absolute;">Show only WHERE <img src="attack.png" style="width:20px;transform: scale(2);"/> &nbsp;&nbsp;&nbsp;<img src="def.png" style="width:20px;transform: scale(2);"/> &nbsp;&nbsp;<img src="hp.png" style="width:20px;transform: scale(2);"/>&nbsp; IV is &nbsp;<input value="1" min="1" max="15" type="number" id="user_iv_value_15" style="width:50px;display:block;float:right;"/></p><input id="showcustom15" type="radio" name="nappi" style="position: absolute;margin-top:210px;"/>
+</div>
+
+<table id="table" class="table table-bordered" style="position: absolute;right:90px;top:50px;width:285px;color:white;overflow:auto;max-height:850px;display: block;overflow-x: hidden;">
+	<thead style="position: fixed;top: 5px;">
+		<th style="width:50px;">#</th>
+		<th style="width:50px;"><img src="attack.png" style="width:20px;transform: scale(2);"/></th>
+		<th style="width:50px;"><img src="def.png" style="width:20px;transform: scale(2);"/></th>
+		<th style="width:50px;"><img src="hp.png" style="width:20px;transform: scale(2);"/></th>
+		<th style="width:50px;">LUCKY</th>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<div id="luckyrate" style="position: absolute;right:450px;top:0px;font-weight: bold;font-size:2.5em;color: white;width:700px;"></div>
+<<!--div id="satkurate" style="position: absolute;right:700px;top:50px;font-weight: bold;font-size:3em;color: white;"></div>-->
+
+
+<div id="amount" style="position: absolute;right:350px;top:600px;width:300px;"></div>
+<script>
+
+	$("#uncheckall").click(function(){
+			$("#showluckies").prop('checked', false);
+			$("#showsatku").prop('checked', false);
+
+			$("#showluckies").trigger('change');
+			$("#showsatku").trigger('change');
+	})
+
+	var modifier = 0;
+
+	var random_attack = Math.floor(Math.random() * 15)+modifier;
+	var random_defence = Math.floor(Math.random() * 15)+modifier;
+	var random_hp = Math.floor(Math.random() * 15 )+modifier;
+
+	var lucky_number = 0;
+
+	if(random_attack > 15)
+	{
+		random_attack -= 5;	
+	}
+	if(random_defence > 15)
+	{
+		random_defence -= 5;	
+	}
+	if(random_hp > 15)
+	{
+		random_hp -= 5;	
+	}
+
+	var att = 0;
+	var def = 0;
+	var hp = 0;
+
+	var percent = 0;
+
+	var random_sound = 0;
+	var index = 0;
+	var luckies = 0;
+	var satkuja = 0;
+	var rerolls = 0;
+	var touched;
+
+	function PrintMinIv()
+	{
+		if($("#goodfriend").filter(":checked").val())
+		{
+			modifier = 1;
+		}
+		if($("#greatfriend").filter(":checked").val())
+		{
+			modifier = 2;
+		}
+		if($("#ultrafriend").filter(":checked").val())
+		{
+			modifier = 3;
+		}
+		if($("#bestfriend").filter(":checked").val())
+		{
+			modifier = 5;
+		}
+	
+		$("#minivs").html(`<p style='margin-left:100px;'>Minimum IV's <h1 style='color:lime;margin-left:100px;'>${modifier}</h1></p>`);
+	}
+
+	$(document).ready(function(){
+$("#reset2").css("background-color", "lime");
+	
+		if(window.innerHeight < 937 && window.innerWidth < 1920)
+		{
+			$("body").css("display","none");
+			$("#sorry").show();
+			$("#sorry").appendTo("html");
+		}
+
+		PrintMinIv();
+		//for(var i = 0;i < 18;i++){$("#reset").click(); } 
+	})
+
+	$(document).click(function(){
+		PrintMinIv();
+	})
+
+	var my_time;
+	$(document).ready(function() {
+		pageScroll();
+	  $("#table").mouseover(function() {
+			clearTimeout(my_time);
+	  }).mouseleave(function() {
+  		pageScroll();
+	  });
+	});
+
+	function pageScroll() {  
+		var objDiv = document.getElementById("table");
+	  objDiv.scrollTop += 100;  
+	  my_time = setTimeout('pageScroll()', 100);
+	}
+
+
+
+
+	$(function(){
+		var luckyt = new Array();
+
+			$("#showsatku").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+
+				if($("#showsatku").is(":checked"))
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						
+						if(luckyt[i].textContent == 15 && luckyt[(i+1)%len].textContent == 15 && luckyt[(i+2)%len].textContent == 15 )
+						{
+							satkuja++;
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();								
+						}
+						
+					}
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+
+			$("#showluckies").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+
+				
+				
+				if($("#showluckies").is(":checked"))
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						if(luckyt[i].style.backgroundColor == "lime")
+						{
+							$(luckyt[i]).parent().show();
+							$(luckyt[i]).siblings().show();
+							$(luckyt[i]).show();
+						}
+						else
+						{
+							$(luckyt[i]).siblings().hide();
+						}
+					}
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+
+			$("#showcustom").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+
+				
+				
+				if($("#showcustom").is(":checked"))
+				{
+					let iv_type = $("#iv_type option:selected").val();
+					let amount = $("#user_iv_value").val();
+					
+					switch(iv_type){
+						case "ATT":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent == amount && luckyt[(i+1)%len].textContent > 1 && luckyt[(i+2)%len].textContent > 1 )
+						{
+							$(luckyt[i]).parent().show();
+						
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+
+						case "DEF":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent > 1 && luckyt[(i+1)%len].textContent == amount && luckyt[(i+2)%len].textContent > 1 )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+
+						case "HP":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent > 1 && luckyt[(i+1)%len].textContent > 1 && luckyt[(i+2)%len].textContent == amount )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+					}
+
+					
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+
+			$("#iv_type").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+				
+				if($("#showcustom").is(":checked"))
+				{
+					let iv_type = $("#iv_type option:selected").val();
+					let amount = $("#user_iv_value").val();
+					
+					switch(iv_type){
+						case "ATT":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent == amount && luckyt[(i+1)%len].textContent > 1 && luckyt[(i+2)%len].textContent > 1 )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+
+						case "DEF":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent > 1 && luckyt[(i+1)%len].textContent == amount && luckyt[(i+2)%len].textContent > 1 )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+
+						case "HP":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent > 1 && luckyt[(i+1)%len].textContent > 1 && luckyt[(i+2)%len].textContent == amount )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+					}
+
+					
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+
+			$("#user_iv_value").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+				
+				if($("#showcustom").is(":checked"))
+				{
+					let iv_type = $("#iv_type option:selected").val();
+					let amount = $("#user_iv_value").val();
+					
+					switch(iv_type){
+						case "ATT":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent == amount && luckyt[(i+1)%len].textContent > 1 && luckyt[(i+2)%len].textContent > 1 )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+
+						case "DEF":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent > 1 && luckyt[(i+1)%len].textContent == amount && luckyt[(i+2)%len].textContent > 1 )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+
+						case "HP":
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent > 1 && luckyt[(i+1)%len].textContent > 1 && luckyt[(i+2)%len].textContent == amount )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+						break;
+					}
+
+					
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+
+			$("#showcustom15").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+				
+				if($("#showcustom15").is(":checked"))
+				{
+					let amount = $("#user_iv_value_15").val();
+
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent == amount && luckyt[(i+1)%len].textContent == amount && luckyt[(i+2)%len].textContent == amount )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+
+			$("#user_iv_value_15").change(function(){
+
+				luckyt = document.querySelectorAll(".tiidii");
+
+				luckyt = Array.from(luckyt);
+				
+				if($("#showcustom15").is(":checked"))
+				{
+					let amount = $("#user_iv_value_15").val();
+
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						var len = luckyt.length;
+						if(luckyt[i].textContent == amount && luckyt[(i+1)%len].textContent == amount && luckyt[(i+2)%len].textContent == amount )
+						{
+							$(luckyt[i]).parent().show();
+							
+						}
+						else
+						{
+							$(luckyt[i]).parent().next().hide();	
+							$(luckyt[0]).parent().hide();
+						}
+					}
+				}
+				else
+				{
+					for (var i = 0, len = luckyt.length; i < len; i++)
+					{
+						$(luckyt[i]).siblings().show();
+						$(luckyt[i]).parent().show();
+						$(luckyt[i]).show();
+					}
+				}
+			})
+	})
+
+$("#reset").click(function(){
+
+$("#luckysound0")[0].pause();
+$("#luckysound0")[0].currentTime = 0;
+
+$("#luckysound1")[0].pause();
+$("#luckysound1")[0].currentTime = 0;
+
+$("#luckysound2")[0].pause();
+$("#luckysound2")[0].currentTime = 0;
+
+
+	rerolls++;
+	lucky_number = Math.floor(Math.random() * 100) + 1;
+
+	$("#attack").find("p").css("visibility", "hidden");
+	$("#defence").find("p").css("visibility", "hidden");
+	$("#hp").find("p").css("visibility", "hidden");
+
+	$("#star1").hide();
+	$("#star2").hide();
+	$("#star3").hide();
+
+	percent = 0;
+	if(lucky_number > 5)
+	{
+		//$("body").css("background-image", "url()");
+		$("#video").hide();
+		random_attack = Math.floor(Math.random() * 15 )+modifier;
+		random_defence = Math.floor(Math.random() * 15 )+modifier;
+		random_hp = Math.floor(Math.random() * 15 )+modifier;
+
+	//random_attack = 15;
+	//random_defence = 15;
+	//random_hp = 15;
+	if(random_attack == 1 && random_defence == 1 && random_hp == 1)
+		{
+			$("#luckysound0")[0].pause();
+			$("#luckysound0")[0].currentTime = 0;
+
+			$("#luckysound1")[0].pause();
+			$("#luckysound1")[0].currentTime = 0;
+
+			$("#luckysound2")[0].play();
+		}
+	
+		if(random_attack > 15)
+		{
+			random_attack -= 5;	
+		}
+		if(random_defence > 15)
+		{
+			random_defence -= 5;	
+		}
+		if(random_hp > 15)
+		{
+			random_hp -= 5;	
+		}
+
+
+	}
+
+	if(lucky_number <= 5)
+	{
+		luckies++;
+		//console.log("lucky");
+		$("#video").show();
+	
+		random_attack = parseInt(Math.random() * (+15 - +12) + +12);
+		//console.log(random_attack);
+
+	
+		random_defence = parseInt(Math.random() * (+15 - +12) + +12);
+		//console.log(random_defence);
+	
+		random_hp = parseInt(Math.random() * (+15 - +12) + +12);
+		//console.log(random_attack, random_defence, random_hp);
+
+		random_sound = Math.floor(Math.random() * (+2 - +0) + +0);
+		//console.log(random_hp);
+	
+		$("#luckysound" + random_sound)[0].play();
+		
+	}	
+
+		att = 0;
+		def = 0;
+		hp = 0;
+		index++;	
+
+	if(lucky_number <= 5)
+	{
+		if(random_attack == 12 && random_defence == 12 && random_hp == 12)
+		{
+			$("#luckysound0")[0].pause();
+			$("#luckysound0")[0].currentTime = 0;
+
+			$("#luckysound1")[0].pause();
+			$("#luckysound1")[0].currentTime = 0;
+
+			$("#luckysound2")[0].play();
+		}
+		
+		let lauseke = `<tr><td>${index}</td><td class='tiidii'>${random_attack}</td><td class='tiidii'>${random_defence}</td><td class='tiidii'>${random_hp}</td><td class='tiidii' style='background-color:lime;'></td></tr>`;
+
+		$("#table tbody").append(lauseke);
+	}
+
+	else
+	{
+		let lauseke = `<tr><td>${index}.</td><td class='tiidii'>${random_attack}</td><td class='tiidii'>${random_defence}</td><td class='tiidii'>${random_hp}</td><td class='tiidii' style='background-color:red;'></td></tr>`;
+		$("#table tbody").append(lauseke);
+	}
+
+	$("#luckyrate").html(`Lucky rate: <pspan style='color:lime;'>${luckies}</span> in&nbsp; <span style='color:lime;display:inline;'>${rerolls} (${(luckies/rerolls * 100).toFixed(2)}%)</span>`);
+
+	var intervalli;
+	
+	$("#table tbody tr td").each(function(){
+	
+		if($(this).text() == "15")
+		{
+			$(this).css("color", "lime");
+			$(this).css("font-weight", "bold");
+
+			$(this).css("font-size", "1.3em");
+
+		}
+			
+	})
+
+
+
+	
+	if($("input[name=nappi]:checked").val())
+	{
+			$("#amount").html(`<span style='font-weight:bold;font-size:3em;'>result (${$("#table tbody tr td:visible").length / 5})</span>`);
+				PrintMinIv();
+	}
+
+
+		$("#attackiv").css("left", $("#attack").css("width"));
+		$("#defiv").css("left", $("#defence").css("width"));
+		$("#hpiv").css("left", $("#hp").css("width"));
+	
+		//if(att < (random_attack * 100) / 2)
+		//{
+			//att += 15.5;
+			let ran_att = random_attack * 100 / 2;
+			$("#attack").css("width", ran_att);
+			$("#attack").css("height", "30px");
+
+			if(ran_att == 750)
+			{
+				$("#attack").css("background-color", "red");
+			}
+			else
+			{
+				$("#attack").css("background-color", "#EF9338");
+			}
+		//}
+		//if(def < (random_defence * 100) / 2)
+		//{
+			//def += 15.5;
+			let ran_def = random_defence * 100 / 2;
+			$("#defence").css("width", ran_def);
+			$("#defence").css("height", "30px");
+
+			if(ran_def == 750)
+			{
+				$("#defence").css("background-color", "red");
+			}
+			else
+			{
+				$("#defence").css("background-color", "#EF9338");
+			}
+		//}
+		//if(hp < (random_hp * 100) / 2)
+		//{
+			//hp += 15.5;
+			let ran_hp = random_hp * 100 / 2;
+			$("#hp").css("width", ran_hp);
+			$("#hp").css("height", "30px");
+
+			if(ran_hp == 750)
+			{
+				$("#hp").css("background-color", "red");
+			}
+			else
+			{
+				$("#hp").css("background-color", "#EF9338");
+			}			
+		//}
+
+		//if(att+1 >=(random_attack * 100) / 2)
+		//{
+
+			$("#attackiv").css("visibility", "visible");
+			$("#attackiv").css("left", $("#attack").css("width"));
+
+			$("#attackiv").html(random_attack.toFixed(0));
+		//}
+		//if(def+1 >=(random_defence * 100) / 2)
+		//{
+			$("#defiv").css("visibility", "visible");
+		$("#defiv").css("left", $("#defence").css("width"));
+			$("#defiv").html(random_defence.toFixed(0));
+		//}
+		//if(hp+1 >=(random_hp * 100) / 2)
+		//{
+			$("#hpiv").css("visibility", "visible");
+				$("#hpiv").css("left", $("#hp").css("width"));
+
+			$("#hpiv").html(random_hp.toFixed(0));
+		//}
+
+		//if(percent < Number(((random_attack + random_defence + random_hp) / 45 * 100 ).toFixed(1)))
+		//{
+			var percent = ((random_attack + random_defence + random_hp) / 45 * 100);
+			
+			//percent += 2.15;
+			if(ran_hp == 750 && ran_att == 750 && ran_def == 750)
+			{
+				
+				$("#audio")[0].play();		
+			
+			}
+			$("#ivpercent").html(percent.toFixed(1)+"%");
+			if(Number(percent.toFixed(1)) > 51.1)
+			{
+				$("#star1").show();
+				
+				if(Number(percent.toFixed(1)) >= 51.1 && Number(percent.toFixed(1)) < 53)
+				{
+					$("#star1").css("transform", "scale(1.8)");
+					$("#star1").css("transition", "0.5s ease all");
+					setTimeout(function(){
+						$("#star1").css("transform", "scale(1)");
+					},50)
+				}
+			}
+			if(Number(percent.toFixed(1)) >= 66.7)
+			{
+				$("#star2").show();
+				if(Number(percent.toFixed(1)) > 66.7 && Number(percent.toFixed(1)) < 70)
+				{
+					$("#star2").css("transform", "scale(1.8)");
+					$("#star2").css("transition", "0.5s ease all");
+					setTimeout(function(){
+						$("#star2").css("transform", "scale(1)");
+					},50)
+				}
+			}
+			if(Number(percent.toFixed(1)) >= 82.2)
+			{
+				$("#star3").show();
+				if(Number(percent.toFixed(1)) > 82.2 && Number(percent.toFixed(1)) < 85)
+				{
+					$("#star3").css("transform", "scale(1.8)");
+					$("#star3").css("transition", "0.5s ease all");
+					setTimeout(function(){
+						$("#star3").css("transform", "scale(1)");
+					},50)
+				}
+			}
+		//}
+	
+})
+
+	$("#reset2").click(function(){
+
+
+		for(let i = 0;i < $("#rerolltimes").val();i++)
+		{
+			$("#reset").click();
+		}
+		
+	})
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+</script>
+</html>
